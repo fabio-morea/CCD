@@ -1,3 +1,5 @@
+
+
 #' Consensus community detection
 #' Performs a consensus community detection algorithm on a given network g, using one of a set of algorithms from the R iGraph library. The result is a more stable than a single-trial, and includes an estimate of uncertainty associated with each community label. 
 #' @param g: the network to be analysed. It must be an iGraph object with a node attribute V(g)$id as an integer value, and an edge attribute E(g)$weight as a numeric value. If g is unweighted, E(g)$weight must be set to 1.0. The graph is treated as undirected.
@@ -8,10 +10,12 @@
 #' @param shuffle: a boolean parameter. If TRUE the network vertices are randomly permuted before each trial of community detection. It allows to obtain results that are no dependent on the order of nodes and edges within the network. (default value = TRUE). 
 #' 
 #' @returns returns a community object, that stores the community labels as $membership and the uncertainty coefficients as $uncertainty
+#' @export
 #'  
 consensus_community_detection <- function(g, t, method='LV', gamma_lim, resolution=c(1.0), shuffle=TRUE) {
     
-    #'  
+    require(igraph)
+    require(tidyverse)
     M <- find_communities_repeated(g,
                                    n_trials=t,
                                    method = method,

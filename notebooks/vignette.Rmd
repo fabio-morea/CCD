@@ -1,6 +1,8 @@
 ---
-title: "vignette: Consensus Community Detection"
-output: html_notebook
+title: 'vignette: Consensus Community Detection'
+output:
+  pdf_document: default
+  html_notebook: default
 ---
 
 # introduction
@@ -10,13 +12,29 @@ This notebook shows the typical usage of che CCD library.
 the library can be downloaded and installed from GitHub https://github.com/fabio-morea/CCD
 ```{r} 
 library(devtools)  
-install_github("fabio-morea/CCD", force = TRUE)
+install_github("fabio-morea/CCD")
 library(CCD)
 ?consensus_community_detection
 ```
 
+data has been loaded with lazyload: it is visible in CCD package as "promise" and loaded at first use.
 ```{r}
+ 
+plot(roc45bc)
 
+```
+ 
+ 
+
+
+```{r}
+comm <- consensus_community_detection(roc45bc,
+                              t=2, 
+                              method='LV', 
+                              gamma_lim = 0.6)
+```
+```{r}
+ 
 ```
 
 
