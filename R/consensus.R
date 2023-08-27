@@ -1,4 +1,37 @@
+#' Consensus community detection
+#' Performs a consensus community detection algorithm on a given network g, using one of a set of algorithms from the R iGraph library. The result is a more stable than a single-trial, and includes an estimate of uncertainty associated with each community label. 
+#' @param g: the network to be analysed. It must be an iGraph object with a node attribute V(g)$id as an integer value, and an edge attribute E(g)$weight as a numeric value. If g is unweighted, E(g)$weight must be set to 1.0. The graph is treated as undirected.
+#' @param t: the number of independent trials 
+#' @param method: the method chosen for community detection. Possible values are:  "ML" multilevel.community(), "LD" cluster_leiden(), "FG" fastgreedy.community(), "IM" infomap.community(), "LP" label.propagation.community(), "WT" walktrap.community() and "LE" leading.eigenvector.community(g). 
+#' @param resolution: the resolution parameter of LV algorithm
+#' @param gamma_lim the threshold for gamma parameter used to calculate concensus, controlling the formation of single-node communities. Nodes that are assigned the same community label more than t*gamma_lim times are clusterd together; otherwise they will form a single-node community. Possible values between 0.0 and 1.0. Typical values are gamma_lim  = 0.5 (large consensus communities) or gamma_lim = 0.9 (smaller, sharper consensus communities, with a larger number of single-node communities)
+#' @param shuffle: a boolean parameter. If TRUE the network vertices are randomly permuted before each trial of community detection. It allows to obtain results that are no dependent on the order of nodes and edges within the network. (default value = TRUE). 
+#' 
+#' @returns returns a community object, that stores the community labels as $membership and the uncertainty coefficients as $uncertainty
+#'  
+consensus_community_detection <- function(g, t, method='LV', gamma_lim, resolution=c(1.0), shuffle=TRUE) {
+    
+    #'  
+    M <- find_communities_repeated(g,
+                                   n_trials=t,
+                                   method = method,
+                                   shuffle = shuffle,
+                                   resolution = resolution,#for Louvain
+                                   verbose = FALSE)
+    
+    nco <- normalized_co_occurrence(M)
+    
+    CC <- consensus_communities(nco,gamma_lim=gamma_lim)
+    
+    cons_communities <- make_clusters(g, array(as.numeric(CC$cons_comm_label)))
+    cons_communities$gamma<-CC$gamma
+    return(cons_communities)
+}
 
+########################
+########################
+########################
+########################
 find_communities <- function(g,method, r = c(1.0),  verbose = FALSE) {
     #' community detection,
     #' retunrs a community object
@@ -180,24 +213,4 @@ consensus_communities <- function(nco, gamma_lim){
 ########################
 
 
-consensus_community_detection <- function(g, t, method='LV', gamma_lim, resolution=c(1.0), shuffle=TRUE) {
-    #' full process of community detection,
-    #'  
-    M <- find_communities_repeated(g,
-                                   n_trials=t,
-                                   method = method,
-                                   shuffle = shuffle,
-                                   resolution = resolution,#for Louvain
-                                   verbose = FALSE)
 
-    nco <- normalized_co_occurrence(M)
-
-    CC <- consensus_communities(nco,gamma_lim=gamma_lim)
-
-    cons_communities <- make_clusters(g, array(as.numeric(CC$cons_comm_label)))
-    cons_communities$gamma<-CC$gamma
-    return(cons_communities)
-}
-
-########################
-########################
