@@ -110,5 +110,11 @@ save(roc45bc, file = "data/roc45bc.rda")
 print(roc45bc)
 
 ```
+```{r}
+plot(roc45bc)
+```
  
+```{r}
+plot(roc84bc)
+```
 

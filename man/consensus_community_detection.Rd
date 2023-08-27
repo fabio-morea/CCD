@@ -2,8 +2,7 @@
 % Please edit documentation in R/consensus.R
 \name{consensus_community_detection}
 \alias{consensus_community_detection}
-\title{Consensus community detection
-Performs a consensus community detection algorithm on a given network g, using one of a set of algorithms from the R iGraph library. The result is a more stable than a single-trial, and includes an estimate of uncertainty associated with each community label.}
+\title{Consensus community detection}
 \usage{
 consensus_community_detection(
   g,
@@ -31,6 +30,5 @@ consensus_community_detection(
 returns a community object, that stores the community labels as $membership and the uncertainty coefficients as $uncertainty
 }
 \description{
-Consensus community detection
 Performs a consensus community detection algorithm on a given network g, using one of a set of algorithms from the R iGraph library. The result is a more stable than a single-trial, and includes an estimate of uncertainty associated with each community label.
 }

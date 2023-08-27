@@ -18,23 +18,27 @@ library(CCD)
 ```
 
 data has been loaded with lazyload: it is visible in CCD package as "promise" and loaded at first use.
-```{r}
- 
-plot(roc45bc)
-
-```
- 
- 
 
 
 ```{r}
 comm <- consensus_community_detection(roc45bc,
-                              t=2, 
+                              t=100, 
                               method='LV', 
                               gamma_lim = 0.6)
+plot(comm,roc45bc )
+plot(roc45bc, vertex.color = if_else(comm$gamma > .01,"red", "green"))
+
 ```
+
 ```{r}
- 
+comm <- consensus_community_detection(roc84bc,
+                              t=100, 
+                              method='LV', 
+                              gamma_lim = 0.6)
+comm$gamma
+plot(comm, roc84bc)
+plot(roc84bc, vertex.color = if_else(comm$gamma > .01,"red", "green"))
+
 ```
 
 
