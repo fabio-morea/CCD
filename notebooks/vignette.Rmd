@@ -1,0 +1,23 @@
+---
+title: "vignette: Consensus Community Detection"
+output: html_notebook
+---
+
+# introduction
+This notebook shows the typical usage of che CCD library.
+
+## installation
+the library can be downloaded and installed from GitHub https://github.com/fabio-morea/CCD
+```{r} 
+library(devtools)  
+install_github("fabio-morea/CCD", force = TRUE)
+library(CCD)
+?consensus_community_detection
+```
+
+```{r}
+
+```
+
+
+ 

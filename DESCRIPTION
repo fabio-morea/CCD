@@ -1,6 +1,6 @@
 Package: CCD
 Title: Consensus Community Detection in Weighted Networks
-Version: 0.0.0.9000
+Version: 0.0.0.1
 Authors@R: 
     person("Fabio", "Morea", , "fabio.morea@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID =  "0000-0002-2034-2951"))
@@ -9,3 +9,4 @@ License: use_mit_license()
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+LazyData: true
