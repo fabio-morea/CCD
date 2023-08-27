@@ -74,7 +74,7 @@ make_ring_of_cliques <- function(num_cliques,
   
   E(G)$weight <- 1.0
   V(G)$id <- seq(1:vcount(G))
-  V(G)$name <- V(g)$id 
+  V(G)$name <- V(G)$id 
 
   
   if (filename != '') {write_graph(G, paste0(filename, '.gml'), format = 'gml')}
