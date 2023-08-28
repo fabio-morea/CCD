@@ -2,11 +2,13 @@
 title: 'vignette: Consensus Community Detection'
 output:
   pdf_document: default
-  html_notebook: default
+  rmarkdown::html_vignette: default
+vignette: |
+  %\VignetteIndexEntry{Put the title of your vignette here} %\VignetteEngine{knitr::rmarkdown} \usepackage[utf8]{inputenc}
 ---
 
 # introduction
-This notebook shows the typical usage of che CCD library.
+This notebook shows the typical usage of the CCD library.
 
 ## installation
 the library can be downloaded and installed from GitHub https://github.com/fabio-morea/CCD
