@@ -1,6 +1,15 @@
 ---
 title: 'Consensus Community Detection'
-output: rmarkdown::html_vignette
+pdf_document: 
+                keep_tex: true
+                toc: true
+                toc_depth: 5
+                fig_width: 5
+                fig_heigh: 4
+                fig_caption: true
+                df_print: kable 
+                highlight: tango
+                citation_package: natbib
 description: >
   Typical use of Consensus Community Detection package.
 vignette: >
@@ -41,17 +50,8 @@ comm <- consensus_community_detection(roc45bc,
                               t=100, 
                               method='LV', 
                               gamma_lim = 0.6) 
-```
-Plotting results focused on communities
-```{r c1p}
-plot(comm,roc45bc )
 
-```
-
-Plotting results focused on uncertainty (gamma coefficient).
-
-```{r c1p1}
-plot(roc45bc, vertex.color = if_else(comm$gamma > .01,"red", "green"))
+print(comm)
 ```
 
 
@@ -69,9 +69,7 @@ plot(roc84bc, vertex.color = if_else(comm$gamma > .01,"red", "green"))
 ```
 
 ## analysis of communities
-```{r}
-?make_community_network
-```
+ 
 
 ```{r}
 #setting the parameters
