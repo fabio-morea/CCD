@@ -1,3 +1,3 @@
 # CCD
 
-Library on Consensus Community Detection in Weighted Networks
+R package to perform Consensus Community Detection in Weighted Networks
