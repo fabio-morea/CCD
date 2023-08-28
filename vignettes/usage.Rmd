@@ -1,21 +1,10 @@
 ---
-title: 'Consensus Community Detection'
-pdf_document: 
-                keep_tex: true
-                toc: true
-                toc_depth: 5
-                fig_width: 5
-                fig_heigh: 4
-                fig_caption: true
-                df_print: kable 
-                highlight: tango
-                citation_package: natbib
-description: >
+title: "Consensus Community Detection"
+description: |
   Typical use of Consensus Community Detection package.
-vignette: >
-  %\VignetteIndexEntry{Consensus Community Detection}
-  %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
+output: html_vignette
+vignette: |
+  %\VignetteIndexEntry{Consensus Community Detection} %\VignetteEngine{knitr::rmarkdown} \usepackage[utf8]{inputenc}
 ---
  
 
