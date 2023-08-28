@@ -3,11 +3,11 @@
 #' 
 #' @param g: The network to be analyzed. It should be an iGraph object with specific attributes:
 #'   - V(g)$community: An integer value representing the community assignment for each node.
-#'   - E(g)$weight: A numeric vector containing edge weights. If the network is unweighted, set E(g)$weight to 1.0.
+#'   - E(g)$w: A numeric vector containing edge weights. If the network is unweighted, set E(g)$w to 1.0.
 #' 
 #' @returns A network object (Gc) with the following attributes:
 #'   - $membership: Stores the community labels.
-#'   - E(Gc)$weight: The sum of corresponding edge weights in the original network (G).
+#'   - E(Gc)$w: The sum of corresponding edge weights in the original network (G).
 #'   - V(Gc)$size: the number of nodes of the original network G that are represented in a node of Gc.
 #'   
 #' @export

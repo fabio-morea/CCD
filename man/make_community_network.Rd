@@ -11,14 +11,14 @@ make_community_network(g)
 \item{g:}{The network to be analyzed. It should be an iGraph object with specific attributes:
 \itemize{
 \item V(g)$community: An integer value representing the community assignment for each node.
-\item E(g)$weight: A numeric vector containing edge weights. If the network is unweighted, set E(g)$weight to 1.0.
+\item E(g)$w: A numeric vector containing edge weights. If the network is unweighted, set E(g)$w to 1.0.
 }}
 }
 \value{
 A network object (Gc) with the following attributes:
 \itemize{
 \item $membership: Stores the community labels.
-\item E(Gc)$weight: The sum of corresponding edge weights in the original network (G).
+\item E(Gc)$w: The sum of corresponding edge weights in the original network (G).
 \item V(Gc)$size: the number of nodes of the original network G that are represented in a node of Gc.
 }
 }
