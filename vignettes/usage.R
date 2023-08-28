@@ -15,12 +15,7 @@ comm <- consensus_community_detection(roc45bc,
                               method='LV', 
                               gamma_lim = 0.6) 
 
-## ----c1p----------------------------------------------------------------------
-plot(comm,roc45bc )
-
-
-## ----c1p1---------------------------------------------------------------------
-plot(roc45bc, vertex.color = if_else(comm$gamma > .01,"red", "green"))
+print(comm)
 
 ## ----c2, echo=TRUE------------------------------------------------------------
 comm <- consensus_community_detection(roc84bc,
@@ -32,9 +27,6 @@ comm$gamma
 plot(comm, roc84bc)
 plot(roc84bc, vertex.color = if_else(comm$gamma > .01,"red", "green"))
 
-
-## -----------------------------------------------------------------------------
-?make_community_network
 
 ## -----------------------------------------------------------------------------
 #setting the parameters
