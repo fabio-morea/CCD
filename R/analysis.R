@@ -1,3 +1,41 @@
+#' This function builds a network (Gc) whose nodes represent communities within the original network (G). 
+#' Gc can be utilized for in-depth analysis and visualization of the relationships among these communities.
+#' 
+#' @param g: The network to be analyzed. It should be an iGraph object with specific attributes:
+#'   - V(g)$community: An integer value representing the community assignment for each node.
+#'   - E(g)$weight: A numeric vector containing edge weights. If the network is unweighted, set E(g)$weight to 1.0.
+#' 
+#' @returns A network object (Gc) with the following attributes:
+#'   - $membership: Stores the community labels.
+#'   - E(Gc)$weight: The sum of corresponding edge weights in the original network (G).
+#'   - V(Gc)$size: the number of nodes of the original network G that are represented in a node of Gc.
+#'   
+#' @export
+
+make_community_network <- function (g) {
+    edges_list <- g %>%
+        as_long_data_frame() %>%
+        select(from_community, to_community, w) %>%
+        group_by(from_community, to_community) %>%
+        summarize(weight = sum(w))
+    
+    gc <- graph_from_data_frame(edges_list, directed = FALSE)
+    V(gc)$id <- (1:vcount(gc))
+    
+    comms <- data.frame(label = V(gc)$name)
+    comms$size <- 0
+    for (i in 1:length(comms$label)) {
+        comms$size[i] <-
+            length(V(g)$community[V(g)$community == comms$label[i]])
+    }
+    V(gc)$size <- comms$size
+    
+    return(gc)
+}
+
+
+
+
 analyse_communities <- function(g, communities, verbose = FALSE) {
     #' Analyse communities function
     #' Prints summary information about the communities
@@ -47,35 +85,7 @@ empirical_mu <- function(g) {
     return(mu)
 }
 
- # make a network of communities
-
-make_community_network <- function (g) {
-    #' Make Community Network function
-    #' returns a network GC whose nodes are the communities of the original network G
-    #' may be useful to analyse and visualise the relationships among communities
-    #' 
-
-edges_list <- g %>%
-    as_long_data_frame() %>%
-    select(from_community, to_community, w) %>%
-    group_by(from_community, to_community) %>%
-    summarize(weight = sum(w))
-
-gc <- graph_from_data_frame(edges_list, directed = FALSE)
-V(gc)$id <- (1:vcount(gc))
-
-comms <- data.frame(label = V(gc)$name)
-comms$size <- 0
-for (i in 1:length(comms$label)) {
-    comms$size[i] <-
-        length(V(g)$community[V(g)$community == comms$label[i]])
-}
-V(gc)$size <- comms$size
-
-return(gc)
-}
-
-
+ 
 
 
 

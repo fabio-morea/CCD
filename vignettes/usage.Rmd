@@ -1,38 +1,62 @@
 ---
-title: 'vignette: Consensus Community Detection'
-output:
-  pdf_document: default
-  rmarkdown::html_vignette: default
-vignette: |
-  %\VignetteIndexEntry{Put the title of your vignette here} %\VignetteEngine{knitr::rmarkdown} \usepackage[utf8]{inputenc}
+title: 'Consensus Community Detection'
+output: rmarkdown::html_vignette
+description: >
+  Typical use of Consensus Community Detection package.
+vignette: >
+  %\VignetteIndexEntry{Consensus Community Detection}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
+ 
+
+```{r setup, echo=FALSE, message=FALSE}
+knitr::opts_chunk$set(collapse = T, comment = "#>")
+options(tibble.print_min = 4, tibble.print_max = 4)
+```
 
 # introduction
-This notebook shows the typical usage of the CCD library.
+This vignette shows the typical usage of the CCD library.
 
 ## installation
 the library can be downloaded and installed from GitHub https://github.com/fabio-morea/CCD
-```{r} 
+
+
+```{r load library, message=FALSE, warning=FALSE}
 library(devtools)  
 install_github("fabio-morea/CCD")
 library(CCD)
-?consensus_community_detection
+library(igraph)
+library(tidyverse)
 ```
 
-data has been loaded with lazyload: it is visible in CCD package as "promise" and loaded at first use.
+
+The package contains two sample networks: `roc45bc` and `roc84bc`.
+
+## example of community detection
 
 
-```{r}
+```{r c1, echo=TRUE}
 comm <- consensus_community_detection(roc45bc,
                               t=100, 
                               method='LV', 
-                              gamma_lim = 0.6)
+                              gamma_lim = 0.6) 
+```
+Plotting results focused on communities
+```{r c1p}
 plot(comm,roc45bc )
-plot(roc45bc, vertex.color = if_else(comm$gamma > .01,"red", "green"))
 
 ```
 
-```{r}
+Plotting results focused on uncertainty (gamma coefficient).
+
+```{r c1p1}
+plot(roc45bc, vertex.color = if_else(comm$gamma > .01,"red", "green"))
+```
+
+
+Second example: a larger network. 
+```{r c2, echo=TRUE}
 comm <- consensus_community_detection(roc84bc,
                               t=100, 
                               method='LV', 

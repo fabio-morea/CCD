@@ -2,14 +2,27 @@
 % Please edit documentation in R/analysis.R
 \name{make_community_network}
 \alias{make_community_network}
-\title{Make Community Network function
-returns a network GC whose nodes are the communities of the original network G
-may be useful to analyse and visualise the relationships among communities}
+\title{This function builds a network (Gc) whose nodes represent communities within the original network (G).
+Gc can be utilized for in-depth analysis and visualization of the relationships among these communities.}
 \usage{
 make_community_network(g)
 }
+\arguments{
+\item{g:}{The network to be analyzed. It should be an iGraph object with specific attributes:
+\itemize{
+\item V(g)$community: An integer value representing the community assignment for each node.
+\item E(g)$weight: A numeric vector containing edge weights. If the network is unweighted, set E(g)$weight to 1.0.
+}}
+}
+\value{
+A network object (Gc) with the following attributes:
+\itemize{
+\item $membership: Stores the community labels.
+\item E(Gc)$weight: The sum of corresponding edge weights in the original network (G).
+\item V(Gc)$size: the number of nodes of the original network G that are represented in a node of Gc.
+}
+}
 \description{
-Make Community Network function
-returns a network GC whose nodes are the communities of the original network G
-may be useful to analyse and visualise the relationships among communities
+This function builds a network (Gc) whose nodes represent communities within the original network (G).
+Gc can be utilized for in-depth analysis and visualization of the relationships among these communities.
 }
