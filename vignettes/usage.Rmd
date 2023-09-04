@@ -2,9 +2,11 @@
 title: "Consensus Community Detection"
 description: |
   Typical use of Consensus Community Detection package.
-output: html_vignette
-vignette: |
-  %\VignetteIndexEntry{Consensus Community Detection} %\VignetteEngine{knitr::rmarkdown} \usepackage[utf8]{inputenc}
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Consensus Community Detection}
+  %\VignetteEncoding{UTF-8}
 ---
  
 
