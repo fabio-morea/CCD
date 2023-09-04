@@ -189,7 +189,7 @@ normalized_co_occurrence <- function(M) {
 consensus_communities <- function(nco, gamma_lim){
     #' calculates consensus based on co-occurrence matrix
     #' 
-    results <- data.frame(name = as.numeric(colnames(nco)))
+    results <- data.frame(name = colnames(nco))
     results$done <- FALSE
     results$cons_comm_label <- 0
 
