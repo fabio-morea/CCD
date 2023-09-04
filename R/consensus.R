@@ -33,10 +33,7 @@ consensus_community_detection <- function(g, t, method='LV', gamma_lim, resoluti
     return(cons_communities)
 }
 
-########################
-########################
-########################
-########################
+#' @export
 find_communities <- function(g,method, r = c(1.0),  verbose = FALSE) {
     #' community detection,
     #' retunrs a community object
@@ -75,8 +72,8 @@ find_communities <- function(g,method, r = c(1.0),  verbose = FALSE) {
     return(comms)
 }
 
-######################################################################
-
+#' @export
+#'  
 find_communities_repeated <- function(g,
                                       n_trials,
                                       method = method,
@@ -84,9 +81,7 @@ find_communities_repeated <- function(g,
                                       resolution = c(1.0),
                                       verbose = FALSE) {
     
-    #' community detection, repeated t times
-    #' 
-    membership_table <- data.frame(name = V(g)$name)
+     membership_table <- data.frame(name = V(g)$name)
 
     for (i in 1:n_trials) {
         if (verbose){print(i)}
@@ -105,54 +100,11 @@ find_communities_repeated <- function(g,
 }
 
 
+ 
 
-######################################################################
-
-find_communities_N_times <- function(g,
-                                     n_trials,
-                                     methods,
-                                     shuffle = FALSE,
-                                     resolution = c(1.0),
-                                     filename_summary = '',
-                                     filename_membership = '') {
-    
-    #' community detection, repeated (THIS FUNCTION IS DEPRECATED)
-    results_n_trials <- data.frame()
-    membership_matrix <- c()
-
-
-    for (i in 1:n_trials) {
-        for (met in methods) {
-            tmp_comms <- find_communities(g, resolution = resolution, method = met, shuffle = shuffle)
-            V(g)$community <- tmp_comms$membership
-            results_single <- analyse_communities(g, tmp_comms)
-            results_n_trials = rbind(results_n_trials, results_single)
-            membership_matrix <- rbind(membership_matrix, t(tmp_comms$membership))
-
-
-        }
-    }
-
-    membership_n_trials <- data.frame(membership_matrix)
-    if (filename_membership != '') {
-        membership_n_trials %>% write_csv(filename_membership)
-        results_n_trials %>% write_csv(filename_summary)
-    }
-    return(membership_n_trials)
-
-
-}
-
-
-# ################# analysis of communities
-# returns modularity, number of communities and NMI against true labels
-# communities <- cons_communities_2
-
-
-
-
+#' @export
 normalized_co_occurrence <- function(M) {
-    #' calculates normalized co occurence matrix
+    # calculates normalized co occurence matrix
 
     names <- M$name
     M<-as.matrix(M %>% select(-name))
@@ -174,21 +126,14 @@ normalized_co_occurrence <- function(M) {
             }
         }
     }
-    #' X is a matrix of x_ij counts of co-occurrence
-    #' X_normalized is a matrix of gamma_ij normalized coefficients
-    #' expressing the probability that i and j are in the same community
-    #' X_normalized_ij == 1.0 means that i and j have ALWAYS been classified in the same community
-    #' X_normalized_ij == 0.0 means that i and j have NEVER been classified in the same community
     X_normalized <- CO / n_trials
     return (X_normalized)
 }
 
 
 
-
+#' @export
 consensus_communities <- function(nco, gamma_lim){
-    #' calculates consensus based on co-occurrence matrix
-    #' 
     results <- data.frame(name = colnames(nco))
     results$done <- FALSE
     results$cons_comm_label <- 0

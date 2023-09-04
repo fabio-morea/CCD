@@ -11,7 +11,6 @@
 #'   - V(Gc)$size: the number of nodes of the original network G that are represented in a node of Gc.
 #'   
 #' @export
-
 make_community_network <- function (g) {
     edges_list <- g %>%
         as_long_data_frame() %>%
@@ -34,8 +33,7 @@ make_community_network <- function (g) {
 }
 
 
-
-
+#' @export
 analyse_communities <- function(g, communities, verbose = FALSE) {
     #' Analyse communities function
     #' Prints summary information about the communities
@@ -73,7 +71,7 @@ analyse_communities <- function(g, communities, verbose = FALSE) {
 
 
 # ############# Calculate empirical value of mixing parameter MU
-
+#' @export
 empirical_mu <- function(g) {
     #' Empirical Mu function
     #' Calculates the value of mixing parameter "mu"
@@ -88,8 +86,6 @@ empirical_mu <- function(g) {
  
 
 
-
-# find neighbours
 
 find_neighbours <- function(g, node_name, order) {
     selected_node_id <- which(V(g)$name == node_name)
