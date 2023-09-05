@@ -150,6 +150,9 @@ consensus_communities <- function(nco, gamma_lim){
         row_test <- nco[ which.max(results$done == FALSE), ]
         nodes_above_threshold <-  (row_test > gamma_lim )
         results$cons_comm_label[ nodes_above_threshold ] <- community_label
+        if (sum(nodes_above_threshold) > 1){
+            results$gamma [ nodes_above_threshold] <- round( 1 -  apply(nco[ nodes_above_threshold, nodes_above_threshold ], 1, mean), 3)
+        }
         results$done[ nodes_above_threshold] <-  TRUE
         nodes_to_process <- sum( results$done == FALSE)
     }

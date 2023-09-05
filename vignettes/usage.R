@@ -9,23 +9,41 @@ library(CCD)
 library(igraph)
 library(tidyverse)
 
+## -----------------------------------------------------------------------------
+plot(roc45bc)
+
 ## ----c1, echo=TRUE------------------------------------------------------------
 comm <- consensus_community_detection(roc45bc,
                               t=100, 
                               method='LV', 
+                              shuffle = TRUE,
                               gamma_lim = 0.6) 
+print(comm$membership)
+print(comm$gamma)
 
-print(comm)
+
+
+## -----------------------------------------------------------------------------
+plot(comm, roc45bc)
 
 ## ----c2, echo=TRUE------------------------------------------------------------
 comm <- consensus_community_detection(roc84bc,
-                              t=500, 
+                              t=100, 
                               method='LV', 
                               gamma_lim = 0.55, 
-                              shuffle = TRUE)
-comm$gamma
-plot(comm, roc84bc)
-plot(roc84bc, vertex.color = if_else(comm$gamma > .01,"red", "green"))
+                              shuffle = T)
+print(comm$gamma)
+
+
+
+## -----------------------------------------------------------------------------
+plot(comm, roc84bc, vertex.label = NA)
+
+## -----------------------------------------------------------------------------
+plot(roc84bc, 
+     vertex.size = 30,
+     vertex.label = comm$gamma,
+     vertex.color = if_else(comm$gamma > .2,"yellow", "green"))
 
 
 ## -----------------------------------------------------------------------------
