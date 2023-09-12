@@ -41,25 +41,31 @@ plot(roc45bc)
 ```
 
 ```{r c1, echo=TRUE}
-comm <- consensus_community_detection(roc45bc,
-                              t=100, 
-                              method='LV', 
-                              shuffle = TRUE,
-                              gamma_lim = 0.6) 
+comm <- cluster_louvain(roc45bc) 
 print(comm$membership)
-print(comm$gamma)
-
+plot(comm, roc45bc)
+ 
 
 ```
 ```{r}
+comm <- consensus_community_detection(roc45bc,
+                              t=1000, 
+                              method='LV', 
+                              gamma_lim = 0.6, 
+                              shuffle = T)
+print(comm$gamma)
 plot(comm, roc45bc)
+plot(roc45bc, 
+     vertex.size = 30,
+     vertex.label = comm$gamma,
+     vertex.color = if_else(comm$gamma > .2,"yellow", "green"))
 ```
 
 
 Second example: a larger network. 
 ```{r c2, echo=TRUE}
 comm <- consensus_community_detection(roc84bc,
-                              t=100, 
+                              t=1000, 
                               method='LV', 
                               gamma_lim = 0.55, 
                               shuffle = T)

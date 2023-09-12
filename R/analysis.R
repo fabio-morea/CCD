@@ -100,3 +100,5 @@ find_neighbours <- function(g, node_name, order) {
     nei_ids <- unique(nei_ids)
     return(nei_ids)
 }
+
+
