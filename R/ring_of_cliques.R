@@ -24,8 +24,8 @@ make_ring_of_cliques <- function(num_cliques,
         G <- G + next_clique
     }
 
-    
     b <- vcount(G)
+
 
     if (add_bridges) {
         G <- add_vertices(G, num_cliques)
@@ -59,7 +59,7 @@ make_ring_of_cliques <- function(num_cliques,
     }
     
     E(G)$weight <- 1.0
-    
+
     return(G)
     
 }
