@@ -3,5 +3,7 @@
 export(consensus_communities)
 export(consensus_community_detection)
 export(find_communities_repeated)
+export(make_clique)
 export(make_community_network)
+export(make_ring_of_cliques)
 export(normalized_co_occurrence)
