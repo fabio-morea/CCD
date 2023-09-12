@@ -7,13 +7,13 @@
 #' @param t: the number of independent trials 
 #' @param method: the method chosen for community detection. Possible values are:  "ML" multilevel.community(), "LD" cluster_leiden(), "FG" fastgreedy.community(), "IM" infomap.community(), "LP" label.propagation.community(), "WT" walktrap.community() and "LE" leading.eigenvector.community(g). 
 #' @param resolution: the resolution parameter of LV algorithm
-#' @param gamma_lim the threshold for gamma parameter used to calculate concensus, controlling the formation of single-node communities. Nodes that are assigned the same community label more than t*gamma_lim times are clusterd together; otherwise they will form a single-node community. Possible values between 0.0 and 1.0. Typical values are gamma_lim  = 0.5 (large consensus communities) or gamma_lim = 0.9 (smaller, sharper consensus communities, with a larger number of single-node communities)
+#' @param p the threshold for gamma parameter used to calculate concensus, controlling the formation of single-node communities. Nodes that are assigned the same community label more than t*p times are clusterd together; otherwise they will form a single-node community. Possible values between 0.0 and 1.0. Typical values are p  = 0.5 (large consensus communities) or p = 0.9 (smaller, sharper consensus communities, with a larger number of single-node communities)
 #' @param shuffle: a boolean parameter. If TRUE the network vertices are randomly permuted before each trial of community detection. It allows to obtain results that are no dependent on the order of nodes and edges within the network. (default value = TRUE). 
 #' 
 #' @returns returns a community object, that stores the community labels as $membership and the uncertainty coefficients as $uncertainty
 #' @export
 #'  
-consensus_community_detection <- function(g, t, method='LV', gamma_lim, resolution=c(1.0), shuffle=TRUE) {
+consensus_community_detection <- function(g, t, method='LV', p, resolution=c(1.0), shuffle=TRUE) {
     
     require(igraph)
     require(tidyverse)
@@ -26,7 +26,7 @@ consensus_community_detection <- function(g, t, method='LV', gamma_lim, resoluti
     
     nco <- normalized_co_occurrence(M)
     
-    CC <- consensus_communities(nco,gamma_lim=gamma_lim)
+    CC <- consensus_communities(nco,p=p)
     
     cons_communities <- make_clusters(g, array(as.numeric(CC$cons_comm_label)))
     cons_communities$gamma<-CC$gamma
@@ -133,7 +133,7 @@ normalized_co_occurrence <- function(M) {
 
 
 #' @export
-consensus_communities <- function(nco, gamma_lim){
+consensus_communities <- function(nco, p){
     results <- data.frame(name = colnames(nco))
     results$done <- FALSE
     results$cons_comm_label <- 0
@@ -148,7 +148,7 @@ consensus_communities <- function(nco, gamma_lim){
     while ( nodes_to_process >= 1 )  {
         community_label <- community_label + 1
         row_test <- nco[ which.max(results$done == FALSE), ]
-        nodes_above_threshold <-  (row_test > gamma_lim )
+        nodes_above_threshold <-  (row_test > p )
         results$cons_comm_label[ nodes_above_threshold ] <- community_label
         if (sum(nodes_above_threshold) > 1){
             results$gamma [ nodes_above_threshold] <- round( 1 -  apply(nco[ nodes_above_threshold, nodes_above_threshold ], 1, mean), 3)
