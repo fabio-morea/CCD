@@ -10,6 +10,7 @@ consensus_community_detection(
   method = "LV",
   p,
   resolution = c(1),
+  steps = c(10),
   shuffle = TRUE
 )
 }

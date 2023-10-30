@@ -35,6 +35,7 @@ consensus_community_detection <- function(g, t, method='LV', p, resolution=c(1.0
 }
 
 #' @export
+#' 
 find_communities <- function(g,method, r = c(1.0),  s = c(10), verbose = FALSE) {
     #' community detection,
     #' retunrs a community object
@@ -74,7 +75,7 @@ find_communities <- function(g,method, r = c(1.0),  s = c(10), verbose = FALSE) 
 }
 
 #' @export
-#'  
+#' 
 find_communities_repeated <- function(g,
                                       n_trials,
                                       method = method,
@@ -105,6 +106,7 @@ find_communities_repeated <- function(g,
  
 
 #' @export
+#' 
 normalized_co_occurrence <- function(M) {
     # calculates normalized co occurence matrix
 
