@@ -51,7 +51,7 @@ plot(comm, roc45bc)
 comm <- consensus_community_detection(roc45bc,
                               t=1000, 
                               method='LV', 
-                              gamma_lim = 0.6, 
+                              p = 0.6, 
                               shuffle = T)
 print(comm$gamma)
 plot(comm, roc45bc)

@@ -13,7 +13,7 @@
 #' @returns returns a community object, that stores the community labels as $membership and the uncertainty coefficients as $uncertainty
 #' @export
 #'  
-consensus_community_detection <- function(g, t, method='LV', p, resolution=c(1.0), shuffle=TRUE) {
+consensus_community_detection <- function(g, t, method='LV', p, resolution=c(1.0), steps = c(10), shuffle=TRUE) {
     
     require(igraph)
     require(tidyverse)
@@ -22,6 +22,7 @@ consensus_community_detection <- function(g, t, method='LV', p, resolution=c(1.0
                                    method = method,
                                    shuffle = shuffle,
                                    resolution = resolution,#for Louvain
+                                   steps = steps, #for walwtrap
                                    verbose = FALSE)
     
     nco <- normalized_co_occurrence(M)
@@ -34,32 +35,32 @@ consensus_community_detection <- function(g, t, method='LV', p, resolution=c(1.0
 }
 
 #' @export
-find_communities <- function(g,method, r = c(1.0),  verbose = FALSE) {
+find_communities <- function(g,method, r = c(1.0),  s = c(10), verbose = FALSE) {
     #' community detection,
     #' retunrs a community object
     #' including the algorithm
     #' applies selected method
     #' applies resolution for LV and LD
     #' undirected(g) for LV and LD
-    
+    gu <- as.undirected(g, mode = 'each')
     method = substr(method, 1, 2)
     if (method == "LV") {
-        comms <- cluster_louvain(as.undirected(g, mode = 'each'), resolution = sample(r, 1))
+        comms <- cluster_louvain(gu, resolution = sample(r, 1))
     } else if (method == "ML") {
-        comms <- multilevel.community(as.undirected(g, mode = 'each'), resolution = sample(r, 1))
+        comms <- multilevel.community(gu, resolution = sample(r, 1))
     } else if (method == "LD") {
         comms <-
-            cluster_leiden(as.undirected(g, mode = 'each'), resolution_parameter = quantile(strength(g))[2] / (gorder(g) - 1))
+            cluster_leiden(gu, resolution_parameter = quantile(strength(g))[2] / (gorder(g) - 1))
     } else if (method == "FG") {
-        comms <- fastgreedy.community(g)
+        comms <- fastgreedy.community(gu)
     } else if (method == "IM") {
-        comms <- infomap.community(g)
+        comms <- infomap.community(gu)
     } else if (method == "LP") {
-        comms <- label.propagation.community(g)
+        comms <- label.propagation.community(gu)
     } else if (method == "WT") {
-        comms <- walktrap.community(g)
+        comms <- walktrap.community(gu, steps = sample(s, 1))
     } else if (method == "LE") {
-        comms <- leading.eigenvector.community(g)
+        comms <- leading.eigenvector.community(gu)
     } else {
         print("No valid method")
         stop
@@ -79,6 +80,7 @@ find_communities_repeated <- function(g,
                                       method = method,
                                       shuffle = TRUE,
                                       resolution = c(1.0),
+                                      steps = c(10),
                                       verbose = FALSE) {
     
      membership_table <- data.frame(name = V(g)$name)
@@ -90,7 +92,7 @@ find_communities_repeated <- function(g,
         } else {
             gs <- g
         }
-        comms <-find_communities(gs, method = method, r = resolution)
+        comms <-find_communities(gs, method = method, r = resolution, s = steps)
         comm_labeled <-data.frame(name = V(gs)$name, memb = comms$membership)
         membership_table <-inner_join(membership_table ,  comm_labeled, by = 'name')
         colnames(membership_table) <- c('name', seq(1:i))

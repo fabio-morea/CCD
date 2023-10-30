@@ -8,13 +8,13 @@ consensus_community_detection(
   g,
   t,
   method = "LV",
-  gamma_lim,
+  p,
   resolution = c(1),
   shuffle = TRUE
 )
 }
 \arguments{
-\item{gamma_lim}{the threshold for gamma parameter used to calculate concensus, controlling the formation of single-node communities. Nodes that are assigned the same community label more than t*gamma_lim times are clusterd together; otherwise they will form a single-node community. Possible values between 0.0 and 1.0. Typical values are gamma_lim  = 0.5 (large consensus communities) or gamma_lim = 0.9 (smaller, sharper consensus communities, with a larger number of single-node communities)}
+\item{p}{the threshold for gamma parameter used to calculate concensus, controlling the formation of single-node communities. Nodes that are assigned the same community label more than t*p times are clusterd together; otherwise they will form a single-node community. Possible values between 0.0 and 1.0. Typical values are p  = 0.5 (large consensus communities) or p = 0.9 (smaller, sharper consensus communities, with a larger number of single-node communities)}
 
 \item{g:}{the network to be analysed. It must be an iGraph object with a node attribute V(g)$id as an integer value, and an edge attribute E(g)$weight as a numeric value. If g is unweighted, E(g)$weight must be set to 1.0. The graph is treated as undirected.}
 
