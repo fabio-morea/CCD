@@ -35,9 +35,9 @@ make_community_network <- function (g) {
 
 #' @export
 analyse_communities <- function(g, communities, verbose = FALSE) {
-    #' Analyse communities function
-    #' Prints summary information about the communities
-    #'
+    # Analyse communities function
+    # Prints summary information about the communities
+    #
    
     method <- communities$algorithm
     c_membership <- communities$membership
@@ -73,9 +73,9 @@ analyse_communities <- function(g, communities, verbose = FALSE) {
 # ############# Calculate empirical value of mixing parameter MU
 #' @export
 empirical_mu <- function(g) {
-    #' Empirical Mu function
-    #' Calculates the value of mixing parameter "mu"
-    #'
+    # Empirical Mu function
+    # Calculates the value of mixing parameter "mu"
+    #
     gdf<-as_long_data_frame(g)
     gdf$inter_comm <- (gdf$from_community != gdf$to_community)
     inter_community_links <- sum(gdf$weight[ gdf$inter_comm == TRUE])

@@ -19,3 +19,16 @@ plot(comm, roc45bc)
  
 
 
+## -----------------------------------------------------------------------------
+comm <- consensus_community_detection(roc45bc,
+                              t=1000, 
+                              method='LV', 
+                              p = 0.6, 
+                              shuffle = T)
+print(comm$gamma)
+plot(comm, roc45bc)
+plot(roc45bc, 
+     vertex.size = 30,
+     vertex.label = comm$gamma,
+     vertex.color = if_else(comm$gamma > .2,"yellow", "green"))
+
