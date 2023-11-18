@@ -18,18 +18,18 @@ make_ring_of_cliques <- function(num_cliques,
                                  clique_size,
                                  add_center = TRUE,
                                  add_bridges = TRUE ) {
-    f <- as.undirected(graph.empty())
+    gg <- as.undirected(graph.empty())
     
     for (i in 1:num_cliques) {
         next_clique <- make_clique(clique_size, comm_label = paste0("C", i))
-        f <- f + next_clique
+        gg <- gg + next_clique
     }
     
-    b <- vcount(f)
+    b <- vcount(gg)
     
     
     if (add_bridges) {
-        f <- add_vertices(f, num_cliques)
+        gg <- add_vertices(gg, num_cliques)
     }
     
     
@@ -39,33 +39,33 @@ make_ring_of_cliques <- function(num_cliques,
         b_end <- b_start + clique_size +1
         if (b_end > (clique_size * num_cliques)) {b_end <- 2}
         if (add_bridges) {
-            f <- add_edges(f, c(b_start, b))
-            f <- add_edges(f, c(b, b_end))
-            V(f)$community[b] <- paste0("B", j)
+            gg <- add_edges(gg, c(b_start, b))
+            gg <- add_edges(gg, c(b, b_end))
+            V(gg)$community[b] <- paste0("B", j)
         } else {
-            f <- add_edges(f, c(b_start, b_end))
+            gg <- add_edges(gg, c(b_start, b_end))
         }
         
     }
     
     if (add_center) {
-        f <- add_vertices(f, 1)
-        id_center <- vcount(f)
-        V(f)$community[id_center] <- "A"
+        gg <- add_vertices(gg, 1)
+        id_center <- vcount(gg)
+        V(gg)$community[id_center] <- "A"
         for (j in 1:(num_cliques)) {
             c_start <- (j-1) * clique_size +3
-            f <- add_edges(f, c(c_start , id_center))
+            gg <- add_edges(gg, c(c_start , id_center))
         }
         
     }
     
-    E(f)$weight <- 1.0
+    E(gg)$weight <- 1.0
     
-    V(g)$name <- 1:vcount(g)
-    V(g)$id <-   1:vcount(g)
+    V(gg)$name <- 1:vcount(gg)
+    V(gg)$id <-   1:vcount(gg)
     
     
-    return(g)
+    return(gg)
     
 }
 
