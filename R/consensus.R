@@ -126,7 +126,7 @@ normalized_co_occurrence <- function(M) {
 
 
 #' @export
-consensus_communities <- function(nco, p) {
+consensus_communities <- function(nco, p, group_outliers = FALSE, verbose = FALSE, save_results=FALSE) {
     
     # definition of community: block within D in which dij > p 
     # this definition includes single node communities (outliers)
