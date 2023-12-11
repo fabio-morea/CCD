@@ -46,7 +46,7 @@ consensus_community_detection <-
         
         cons_communities <-make_clusters(g, array(as.numeric(CC$cons_comm_label)))
         cons_communities$gamma <- CC$gamma
-        cons_communities$gamma <- CC$name
+        cons_communities$name <- CC$name
         return(cons_communities)
     }
 
