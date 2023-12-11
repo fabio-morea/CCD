@@ -18,17 +18,17 @@
 
 
 #' @export
-consensus_community_detection <-
-    function(g,
-             t,
+consensus_community_detection <- function(g,
+             t=100,
              method = 'LV',
-             p,
+             p=0.6,
+             group_outliers = FALSE,
              resolution = c(1.0),
-             steps = c(10),
+             steps = c(5),
              shuffle = TRUE) {
         require(igraph)
         require(tidyverse)
-        M <- find_communities_repeated(
+        M <- CCD::find_communities_repeated(
             g,
             n_trials = t,
             method = method,
@@ -40,13 +40,14 @@ consensus_community_detection <-
             verbose = FALSE
         )
         
-        nco <- normalized_co_occurrence(M)
+        D <- CCD::normalized_co_occurrence(M)
         
-        CC <- consensus_communities(nco, p = p)
+        CC <- CCD::consensus_communities(D, p = p,group_outliers = group_outliers )
         
         cons_communities <-make_clusters(g, array(as.numeric(CC$cons_comm_label)))
         cons_communities$gamma <- CC$gamma
         cons_communities$name <- CC$name
+        cons_communities$comm_size <- CC$comm_size
         return(cons_communities)
     }
 

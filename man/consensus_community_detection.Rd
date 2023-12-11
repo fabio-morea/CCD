@@ -6,11 +6,12 @@
 \usage{
 consensus_community_detection(
   g,
-  t,
+  t = 100,
   method = "LV",
-  p,
+  p = 0.6,
+  group_outliers = FALSE,
   resolution = c(1),
-  steps = c(10),
+  steps = c(5),
   shuffle = TRUE
 )
 }
