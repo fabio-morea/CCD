@@ -127,34 +127,71 @@ normalized_co_occurrence <- function(M) {
 
 #' @export
 consensus_communities <- function(nco, p) {
-    results <- data.frame(name = colnames(nco))
+    
+    # definition of community: block within D in which dij > p 
+    # this definition includes single node communities (outliers)
+    
+    # definition of uncertainty coefficient gamma: 
+    #     (1-MEAN of di) over all nodes that are at least once in the same community
+    
+    
+    
+    results <- data.frame(name = colnames(D))
     results$done <- FALSE
-    results$cons_comm_label <- 0
-    
-    # GAMMA
-    coeffs <- nco
-    diag(coeffs) <- 0.0
-    results$gamma <-  round(1 -  apply(coeffs, 1, max), 4)
-    
+    results$tmp_comm_label <- NA
+    results$gamma <- NA
+    results$comm_size <- NA
+    results$single
     community_label <- 0
     nodes_to_process = nrow(results)
-    while (nodes_to_process >= 1)  {
-        community_label <- community_label + 1
-        row_test <- nco[which.max(results$done == FALSE),]
-        nodes_above_threshold <-  (row_test > p)
-        results$cons_comm_label[nodes_above_threshold] <-
-            community_label
-        if (sum(nodes_above_threshold) > 1) {
-            results$gamma [nodes_above_threshold] <-
-                round(1 -  apply(nco[nodes_above_threshold, nodes_above_threshold], 1, mean), 3)
+    
+    while (nodes_to_process > 0)  {
+        community_label <-community_label + 1                 
+        #select a block with respect to threshold p, first row not done
+        nodes_internal <- (D[which.max(results$done == FALSE), ] > p) 
+        
+        # calculate gamma for eachnode in the block 
+        gammas <- D[nodes_internal,  ]
+        # ignore nodes that are never in the same community
+        gammas[gammas == 0]<-NA
+        
+        if(sum(nodes_internal)> 1){     # a proper block
+            results$gamma[nodes_internal] <-  1- apply(gammas, 1, mean, na.rm=T)
+        } else { # a single node
+            results$gamma[nodes_internal] <-  1- mean(gammas,  na.rm=T)
         }
-        results$done[nodes_above_threshold] <-  TRUE
+        
+        results$tmp_comm_label[nodes_internal] <- community_label
+        results$comm_size[nodes_internal] <- sum(nodes_internal)
+        results$done[nodes_internal] <-  TRUE
         nodes_to_process <- sum(results$done == FALSE)
+        
+    } 
+    
+    results$gamma[ is.na(results$gamma)]<- 0.0
+    results$single[  results$comm_size == 1] <- TRUE
+    
+    if (group_outliers){
+        results$tmp_comm_label[ results$single ] <- 0
     }
     
+    x <- results %>%
+        group_by(tmp_comm_label)%>%
+        summarize( n = n()) %>% arrange(-n) %>%
+        mutate(cons_comm_label = row_number())
+    
+    results <- results %>% 
+        inner_join (x) %>% 
+        select(name,cons_comm_label,gamma,comm_size,single)
+    
+    
+    if (save_results){ results %>% write_csv('results.csv')}
+    
     return(results)
-}
-
+}  
+     
+     
+     
 
 
 
