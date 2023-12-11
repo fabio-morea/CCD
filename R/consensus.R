@@ -126,11 +126,32 @@ normalized_co_occurrence <- function(M) {
 
 
 #' @export
+<<<<<<< HEAD
 consensus_communities <- function(D,
              p,
              group_outliers = FALSE,
              verbose = FALSE,
              save_results = FALSE) {
+=======
+consensus_communities <- function(nco, p, group_outliers = FALSE, verbose = FALSE, save_results=FALSE) {
+    
+    # definition of community: block within D in which dij > p 
+    # this definition includes single node communities (outliers)
+    
+    # definition of uncertainty coefficient gamma: 
+    #     (1-MEAN of di) over all nodes that are at least once in the same community
+    
+    
+    
+    results <- data.frame(name = colnames(D))
+    results$done <- FALSE
+    results$tmp_comm_label <- NA
+    results$gamma <- NA
+    results$comm_size <- NA
+    results$single
+    community_label <- 0
+    nodes_to_process = nrow(results)
+>>>>>>> b75dcd784de44b7b0f09b45729001e0a732e95e7
     
         # definition of community: block within D in which dij > p
         # this definition includes single node communities (outliers)
