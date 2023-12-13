@@ -198,7 +198,7 @@ consensus_communities <- function(D, p, group_outliers = FALSE, verbose = FALSE,
             mutate(cons_comm_label = row_number())
         
         results <- results %>%
-            inner_join (x) %>%
+            inner_join (x, by = 'tmp_comm_label') %>%
             select(name, cons_comm_label, gamma, comm_size, single)
         
         
