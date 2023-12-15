@@ -142,7 +142,7 @@ consensus_communities <- function(D, p, group_outliers = FALSE, verbose = FALSE,
     results$tmp_comm_label <- NA
     results$gamma <- NA
     results$comm_size <- NA
-    results$single
+    results$single <- FALSE
     community_label <- 0
     nodes_to_process = nrow(results)
      
