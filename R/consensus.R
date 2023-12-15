@@ -88,7 +88,6 @@ find_communities_repeated <- function(g,
             inner_join(membership_table ,  comm_labeled, by = 'name')
         colnames(membership_table) <- c('name', seq(1:i))
     }
-    membership_table <- membership_table
     return(membership_table)
 }
 
