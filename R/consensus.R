@@ -111,10 +111,10 @@ normalized_co_occurrence <- function(M) {
         for (k in 1:nclusters) {
             samecluster <- (which(M[, t] == k))
             nc <- length(samecluster)
-            for (i in 1:nc) {
-                for (j in 1:nc) {
-                    CO[samecluster[j], samecluster[i]] <-
-                        CO[samecluster[j], samecluster[i]] + 1
+            for (i in 1:(nc-1)) {
+                for (j in (i+1):nc) {
+                    CO[samecluster[j], samecluster[i]] <- CO[samecluster[j], samecluster[i]] + 1
+                    CO[samecluster[i], samecluster[j]] <- CO[samecluster[j], samecluster[i]]
                 }
             }
         }
@@ -163,9 +163,9 @@ consensus_communities <- function(D, p, group_outliers = FALSE, verbose = FALSE,
         
         while (nodes_to_process > 0)  {
             community_label <- community_label + 1
+            
             #select a block with respect to threshold p, first row not done
-            nodes_internal <-
-                (D[which.max(results$done == FALSE),] > p)
+            nodes_internal <- (D[which.max(results$done == FALSE),] > p)
             
             # calculate gamma for eachnode in the block
             gammas <- D[nodes_internal,]
