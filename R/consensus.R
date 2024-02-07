@@ -87,13 +87,13 @@ find_communities_repeated <- function(g,
         ###comm_labeled <-data.frame(name = V(gs)$name,memb = comms$membership)
         ###membership_table <-inner_join(membership_table ,  comm_labeled, by = 'name')
         ###colnames(membership_table) <- c('name', seq(1:i))
+        comm_labeled <- data.frame(name = V(gs)$name, memb = comms$membership)
+        membership_table <- inner_join(membership_table ,  comm_labeled, by = 'name')
+        #membership_table  <- cbind(membership_table, comms$membership[order(match(comms$name, V(g)$name))])
+        colnames(membership_table) <- c('name', seq(1:i))
         
-        membership_table  <- cbind(membership_table,
-
-                                   comms$membership[order(match(comms$name, V(g)$name))])
 
     }
-    colnames(membership_table) <- c('name', seq(1:i))
     return(membership_table)
 }
 
