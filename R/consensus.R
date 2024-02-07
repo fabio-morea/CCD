@@ -106,13 +106,14 @@ normalized_co_occurrence <- function(M) {
     CO <- matrix(0, nrow = n_nodes, ncol = n_nodes)
     colnames(CO) <- names
     rownames(CO) <- names
+    
     for (t in (1:n_trials)) {
         nclusters <- max(M[, t])
         for (k in 1:nclusters) {
             samecluster <- (which(M[, t] == k))
             nc <- length(samecluster)
-            for (i in 1:(nc-1)) {
-                for (j in (i+1):nc) {
+            for (i in 1:nc) {
+                for (j in i:nc) {
                     CO[samecluster[j], samecluster[i]] <- CO[samecluster[j], samecluster[i]] + 1
                     CO[samecluster[i], samecluster[j]] <- CO[samecluster[j], samecluster[i]]
                 }
