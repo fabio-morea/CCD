@@ -26,8 +26,9 @@ consensus_community_detection <- function(g,
              resolution = c(1.0),
              steps = c(5),
              shuffle = TRUE) {
-        require(igraph)
-        require(tidyverse)
+        
+    require(igraph)
+    require(tidyverse)
         M <- CCD::find_communities_repeated(
             g,
             n_trials = t,
@@ -60,7 +61,7 @@ find_communities_repeated <- function(g,
                                       resolution = c(1.0),
                                       steps = c(10),
                                       verbose = FALSE) {
-    
+    membership_table <- data.frame(name = V(g)$name)
     
     for (i in 1:n_trials) {
         if (verbose) {
@@ -86,9 +87,10 @@ find_communities_repeated <- function(g,
         ###membership_table <-inner_join(membership_table ,  comm_labeled, by = 'name')
         ###colnames(membership_table) <- c('name', seq(1:i))
         
-        membership_table <- data.frame(name = V(g)$name)
-        membership_table$memb <- comms$membership[order(match(comms$name, V(g)$name))]
+        membership_table  <- cbind(membership_table,
+                                   comms$membership[order(match(comms$name, V(g)$name))])
     }
+    colnames(membership_table) <- c('name', seq(1:i))
     return(membership_table)
 }
 
