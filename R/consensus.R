@@ -60,7 +60,7 @@ find_communities_repeated <- function(g,
                                       resolution = c(1.0),
                                       steps = c(10),
                                       verbose = FALSE) {
-    membership_table <- data.frame(name = V(g)$name)
+    
     
     for (i in 1:n_trials) {
         if (verbose) {
@@ -81,11 +81,12 @@ find_communities_repeated <- function(g,
                              method = method,
                              r = resolution,
                              s = steps)
-        comm_labeled <-
-            data.frame(name = V(gs)$name,
-                       memb = comms$membership)
-        membership_table <-
-            inner_join(membership_table ,  comm_labeled, by = 'name')
+        
+        ###comm_labeled <-data.frame(name = V(gs)$name,memb = comms$membership)
+        ###membership_table <-inner_join(membership_table ,  comm_labeled, by = 'name')
+        
+        membership_table <- data.frame(name = V(g)$name)
+        membership_table$memb <- comms$membership[order(match(comms$name, V(g)$name))]
         colnames(membership_table) <- c('name', seq(1:i))
     }
     return(membership_table)
