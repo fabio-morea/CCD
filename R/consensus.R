@@ -62,7 +62,7 @@ find_communities_repeated <- function(g,
                                       steps = c(10),
                                       verbose = FALSE) {
 
-    membership_table <- data.frame(name = V(g)$name)
+    membership_table <- data.frame(name = V(g)$name))
 
     for (i in 1:n_trials) {
         if (verbose) {
