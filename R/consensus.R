@@ -61,6 +61,10 @@ find_communities_repeated <- function(g,
                                       resolution = c(1.0),
                                       steps = c(10),
                                       verbose = FALSE) {
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 7f02a6339d98a41351d9fb4cf9781cd988fd7824
     membership_table <- data.frame(name = V(g)$name)
     
     for (i in 1:n_trials) {
@@ -88,7 +92,11 @@ find_communities_repeated <- function(g,
         ###colnames(membership_table) <- c('name', seq(1:i))
         
         membership_table  <- cbind(membership_table,
+<<<<<<< HEAD
                                    comms$membership[order(match(comms$name, V(g)$name))])
+=======
+                                   comms$membership[order(match(comms$name, V(g)$name))]
+>>>>>>> 7f02a6339d98a41351d9fb4cf9781cd988fd7824
     }
     colnames(membership_table) <- c('name', seq(1:i))
     return(membership_table)
