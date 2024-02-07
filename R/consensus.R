@@ -84,10 +84,10 @@ find_communities_repeated <- function(g,
         
         ###comm_labeled <-data.frame(name = V(gs)$name,memb = comms$membership)
         ###membership_table <-inner_join(membership_table ,  comm_labeled, by = 'name')
+        ###colnames(membership_table) <- c('name', seq(1:i))
         
         membership_table <- data.frame(name = V(g)$name)
         membership_table$memb <- comms$membership[order(match(comms$name, V(g)$name))]
-        colnames(membership_table) <- c('name', seq(1:i))
     }
     return(membership_table)
 }
