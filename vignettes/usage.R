@@ -4,7 +4,7 @@ options(tibble.print_min = 4, tibble.print_max = 4)
 
 ## ----load library, message=FALSE, warning=FALSE-------------------------------
 library(devtools)  
-devtools::install_github("fabio-morea/CCD")
+devtools::install_github("fabio-morea/CCD", force = TRUE)
 library(CCD)
 library(igraph)
 library(tidyverse)
@@ -20,8 +20,8 @@ plot(comm, roc45bc)
 
 
 ## -----------------------------------------------------------------------------
-comm <- consensus_community_detection(roc45bc,
-                              t=1000, 
+comm <- CCD::consensus_community_detection(roc45bc,
+                              t=100, 
                               method='LV', 
                               p = 0.6, 
                               shuffle = T)
