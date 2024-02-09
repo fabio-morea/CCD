@@ -25,6 +25,7 @@ consensus_community_detection <- function(g,
              group_outliers = FALSE,
              resolution = c(1.0),
              steps = c(5),
+             IMtrials = 1,
              shuffle = TRUE) {
         require(igraph)
         require(tidyverse)
@@ -42,7 +43,7 @@ consensus_community_detection <- function(g,
         
         D <- CCD::normalized_co_occurrence(M)
         
-        CC <- CCD::consensus_communities(D, p = p,group_outliers = group_outliers )
+        CC <- CCD::consensus(D, p = p,group_outliers = group_outliers )
         
         cons_communities <-make_clusters(g, array(as.numeric(CC$cons_comm_label)))
         cons_communities$gamma <- CC$gamma
@@ -59,6 +60,7 @@ find_communities_repeated <- function(g,
                                       shuffle = TRUE,
                                       resolution = c(1.0),
                                       steps = c(10),
+                                      IMtrials = 1,
                                       verbose = FALSE) {
     membership_table <- data.frame(name = V(g)$name)
     
@@ -129,7 +131,7 @@ normalized_co_occurrence <- function(M) {
 
 #' @export
 
-consensus_communities <- function(D, p, group_outliers = FALSE, verbose = FALSE, save_results=FALSE) {
+consensus <- function(D, p, group_outliers = FALSE, verbose = FALSE, save_results=FALSE) {
     
     # definition of community: block within D in which dij > p 
     # this definition includes single node communities (outliers)
