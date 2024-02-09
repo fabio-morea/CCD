@@ -12,6 +12,7 @@ consensus_community_detection(
   group_outliers = FALSE,
   resolution = c(1),
   steps = c(5),
+  IMtrials = 1,
   shuffle = TRUE
 )
 }

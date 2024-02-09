@@ -44,7 +44,7 @@ consensus_community_detection <- function(g,
         
         D <- CCD::normalized_co_occurrence(M)
         
-        CC <- CCD::consensus(D, p = p,group_outliers = group_outliers )
+        CC <- CCD::consensus_communities(D, p = p,group_outliers = group_outliers )
         
         cons_communities <-make_clusters(g, array(as.numeric(CC$cons_comm_label)))
         cons_communities$gamma <- CC$gamma
@@ -128,8 +128,9 @@ normalized_co_occurrence <- function(M) {
             }
         }
     }
-    diag(CO)<-1
     X_normalized <- CO / n_trials
+    diag(X_normalized) <- 1.0
+    
     return (X_normalized)
 }
 
@@ -137,7 +138,7 @@ normalized_co_occurrence <- function(M) {
 
 #' @export
 
-consensus <- function(D, p, group_outliers = FALSE, verbose = FALSE, save_results=FALSE) {
+consensus_communities <- function(D, p, group_outliers = FALSE, verbose = FALSE, save_results=FALSE) {
     
     # definition of community: block within D in which dij > p 
     # this definition includes single node communities (outliers)
