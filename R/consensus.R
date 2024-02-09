@@ -113,13 +113,14 @@ normalized_co_occurrence <- function(M) {
             samecluster <- (which(M[, t] == k))
             nc <- length(samecluster)
             for (i in 1:nc) {
-                for (j in i:nc) {
+                for (j in (i+1):nc) {
                     CO[samecluster[j], samecluster[i]] <- CO[samecluster[j], samecluster[i]] + 1
                     CO[samecluster[i], samecluster[j]] <- CO[samecluster[j], samecluster[i]]
                 }
             }
         }
     }
+    diag(CO)<-1
     X_normalized <- CO / n_trials
     return (X_normalized)
 }
