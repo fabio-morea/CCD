@@ -5,6 +5,7 @@ find_communities <-
              method,
              r = c(1.0),
              s = c(10),
+             IMtrials = 1,
              verbose = FALSE) {
         require(igraph)
                 gu <- as.undirected(g, mode = 'each')
@@ -19,7 +20,7 @@ find_communities <-
         } else if (method == "FG") {
             comms <- fastgreedy.community(gu)
         } else if (method == "IM") {
-            comms <- infomap.community(gu)
+            comms <- infomap.community(gu, nb.trials = IMtrials) 
         } else if (method == "LP") {
             comms <- label.propagation.community(gu)
         } else if (method == "WT") {
