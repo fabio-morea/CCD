@@ -122,8 +122,9 @@ normalized_co_occurrence <- function(M) {
             }
         }
     }
-    diag(CO)<-1
     X_normalized <- CO / n_trials
+    diag(X_normalized) <- 1.0
+    
     return (X_normalized)
 }
 
