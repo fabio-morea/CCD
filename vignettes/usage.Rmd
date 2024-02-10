@@ -23,7 +23,7 @@ the library can be downloaded and installed from GitHub https://github.com/fabio
 
 
 ```{r load library, message=FALSE, warning=FALSE}
-library(devtools)  
+#library(devtools)  
 devtools::install_github("fabio-morea/CCD")
 library(CCD)
 library(igraph)
@@ -49,7 +49,7 @@ plot(comm, roc45bc)
 ```
 ```{r}
 comm <- consensus_community_detection(roc45bc,
-                              t=1000, 
+                              t=100, 
                               method='LV', 
                               p = 0.6, 
                               shuffle = T)
@@ -65,14 +65,16 @@ plot(roc45bc,
 Second example: a larger network. 
 ```{r c2, echo=TRUE}
 comm <- consensus_community_detection(roc84bc,
-                              t=1000, 
-                              method='LV', 
-                              p = 0.55, 
+                              t=100, 
+                              method='LV',
+                              r = 1.0,
+                              p = 0.60, 
                               shuffle = T)
-print(comm$gamma)
+plot(comm, roc84bc)
 
 
 ```
+
 ```{r}
 plot(comm, roc84bc, vertex.label = NA)
 ```
