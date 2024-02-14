@@ -8,6 +8,7 @@ options(tibble.print_min = 4, tibble.print_max = 4)
 library(CCD)
 library(igraph)
 library(tidyverse)
+library(aricode)
 
 ## -----------------------------------------------------------------------------
 plot(roc45bc)

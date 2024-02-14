@@ -218,15 +218,16 @@ consensus_communities <- function(D, p, group_outliers = FALSE, verbose = FALSE,
 
      
      
-
-
+ 
 
 ########################
 ########################
 ########################
 #' @export
+
 rank_partitions <- function (M,q){
-    stopifnot("q must be in the range 0 <= q < 1 " = (q => 0 && q < 1))
+    
+    stopifnot(q <= 0 && q < 1)
     MM<-M[, -1]
     n_partitions <- ncol(MM) 
     nmi_values <- combn(n_partitions, 2, function(x) NMI(MM[, x[1]], MM[, x[2]]))

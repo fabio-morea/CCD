@@ -67,6 +67,8 @@ plot(roc45bc,
 
 Second example: a larger network. 
 ```{r c2, echo=TRUE}
+CCD::
+
 comm <- CCD::consensus_community_detection(roc84bc,
                               t=100, 
                               method='LV',
