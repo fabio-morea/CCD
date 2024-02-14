@@ -9,8 +9,9 @@ consensus_community_detection(
   t = 100,
   method = "LV",
   p = 0.6,
+  q = 0.5,
   group_outliers = FALSE,
-  resolution = c(1),
+  resolution = NA,
   steps = c(5),
   IMtrials = 1,
   shuffle = TRUE

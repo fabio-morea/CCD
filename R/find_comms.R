@@ -11,13 +11,13 @@ find_communities <-
                 gu <- as.undirected(g, mode = 'each')
         method = substr(method, 1, 2)
         if (method == "LV") {
-            if (all(is.na(r))){r<- c(1.0)}
+            if (any(is.na(r))){r<- c(1.0)}
             comms <- cluster_louvain(gu, resolution = sample(r, 1))
         } else if (method == "ML") {
-            if (all(is.na(r))){r<- c(1.0)}
+            if (any(is.na(r))){r<- c(1.0)}
             comms <- multilevel.community(gu, resolution = sample(r, 1))
         } else if (method == "LD") {
-            if (all(is.na(r))){r<- c(quantile(strength(g))[2] / (gorder(g) - 1))}
+            if (any(is.na(r))){r<- c(quantile(strength(g))[2] / (gorder(g) - 1))}
             comms <- cluster_leiden(gu, resolution_parameter = sample(r, 1))
         } else if (method == "FG") {
             comms <- fastgreedy.community(gu)

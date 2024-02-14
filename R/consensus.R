@@ -22,6 +22,7 @@ consensus_community_detection <- function(g,
              t=100,
              method = 'LV',
              p=0.6,
+             q = 0.5,
              group_outliers = FALSE,
              resolution = NA,
              steps = c(5),
@@ -41,7 +42,9 @@ consensus_community_detection <- function(g,
             verbose = FALSE
         )
         
-        D <- CCD::normalized_co_occurrence(M)
+        #D <- CCD::normalized_co_occurrence(M)
+        D <- CCD::normalized_co_occurrence(M[  , c(1,CCD::rank_partitions(M,q)+1) ])
+        
         
         CC <- CCD::consensus_communities(D, p = p,group_outliers = group_outliers )
         
@@ -219,3 +222,21 @@ consensus_communities <- function(D, p, group_outliers = FALSE, verbose = FALSE,
 
 
 ########################
+########################
+########################
+#' @export
+rank_partitions <- function (M,q){
+    stopifnot("q must be in the range 0 < q < 1 " = (q > 0 && q < 1))
+    MM<-M[, -1]
+    n_partitions <- ncol(MM) 
+    nmi_values <- combn(n_partitions, 2, function(x) NMI(MM[, x[1]], MM[, x[2]]))
+    # Construct a symmetric matrix from the computed NMI values
+    nmi_matrix <- matrix(1.0, n_partitions, n_partitions)
+    nmi_matrix[lower.tri(nmi_matrix)] <- nmi_values
+    nmi_matrix[upper.tri(nmi_matrix)] <- t(nmi_matrix)[upper.tri(nmi_matrix)]
+    ## Calculate average NMI for each row
+    average_nmi <- colMeans(nmi_matrix)
+    best_partitions <- which(average_nmi >= quantile(average_nmi, q))
+    return(best_partitions)
+}
+

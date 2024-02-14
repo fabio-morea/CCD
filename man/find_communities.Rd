@@ -4,7 +4,7 @@
 \alias{find_communities}
 \title{Basic function to find communities}
 \usage{
-find_communities(g, method, r = c(1), s = c(10), IMtrials = 1, verbose = FALSE)
+find_communities(g, method, r = NA, s = c(10), IMtrials = 1, verbose = FALSE)
 }
 \description{
 Basic function to find communities
