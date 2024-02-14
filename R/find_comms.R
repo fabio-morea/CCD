@@ -3,7 +3,7 @@
 find_communities <-
     function(g,
              method,
-             r = c(1.0),
+             r = NA,
              s = c(10),
              IMtrials = 1,
              verbose = FALSE) {
@@ -11,12 +11,14 @@ find_communities <-
                 gu <- as.undirected(g, mode = 'each')
         method = substr(method, 1, 2)
         if (method == "LV") {
+            if (any(is.na(r))){r<- c(1.0)}
             comms <- cluster_louvain(gu, resolution = sample(r, 1))
         } else if (method == "ML") {
+            if (any(is.na(r))){r<- c(1.0)}
             comms <- multilevel.community(gu, resolution = sample(r, 1))
         } else if (method == "LD") {
-            comms <-
-                cluster_leiden(gu, resolution_parameter = quantile(strength(g))[2] / (gorder(g) - 1))
+            if (any(is.na(r))){r<- c(quantile(strength(g))[2] / (gorder(g) - 1))}
+            comms <- cluster_leiden(gu, resolution_parameter = sample(r, 1))
         } else if (method == "FG") {
             comms <- fastgreedy.community(gu)
         } else if (method == "IM") {
