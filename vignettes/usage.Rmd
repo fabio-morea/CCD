@@ -28,6 +28,7 @@ the library can be downloaded and installed from GitHub https://github.com/fabio
 library(CCD)
 library(igraph)
 library(tidyverse)
+library(aricode)
 ```
 
 
@@ -52,7 +53,8 @@ plot(comm, roc45bc)
 comm <- CCD::consensus_community_detection(roc45bc,
                               t=100, 
                               method='LV', 
-                              p = 0.6, 
+                              p = 0.8, 
+                              q=.5,
                               shuffle = T)
 print(comm$gamma)
 plot(comm, roc45bc)
@@ -65,11 +67,12 @@ plot(roc45bc,
 
 Second example: a larger network. 
 ```{r c2, echo=TRUE}
-comm <- consensus_community_detection(roc84bc,
+comm <- CCD::consensus_community_detection(roc84bc,
                               t=100, 
                               method='LV',
                               r = 1.0,
                               p = 0.60, 
+                              q=.5,
                               shuffle = T)
 plot(comm, roc84bc)
 
